@@ -1,0 +1,22 @@
+{% load staticfiles %}
+
+<head>
+<link href = "{% static 'main/css/materialize.css' %}" rel = "stylesheet">
+</head>
+
+<form method = 'POST'> {% csrf_token %}
+{{form.as_p}}
+</form>
+
+    <div class="col s12 m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">this</span>
+          <p style = "font-size = 70%">this is a test</p>
+          <p>{{tut.tutorial_published}}</p>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
