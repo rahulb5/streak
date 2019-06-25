@@ -1,0 +1,29 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Stock DETAILS</title>
+</head>
+<body>
+<h1>Details:-</h1>
+<table border="1" width="600">
+<tr>
+<td>#</td>
+<td>C2 Heading</td>
+<td>C3 Heading</td>
+<td>C4 Heading</td>
+<td>C5 Heading</td>
+<td>C6 Heading</td>
+</tr>
+{%for count in %}
+<tr>
+  <td>{{count+1}}</td>
+  <td>{{}}</td>
+  <td>{{}}</td>
+  <td>{{}}</td>
+  <td>{{}}</td>
+  <td>{{}}</td>
+</tr>
+{%endfor%}
+</table>
+</body>
+</html>
