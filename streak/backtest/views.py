@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from backtest.main import main
-from django.http import HttpResponse
+from .models import trade
+from django.http import HttpResponseBadRequest
 #from .main import trade
 
 # Create your views here.
@@ -22,7 +23,13 @@ def get_data(request):
 
 def submit(request):
     
+    var_id = request.session['saved']
+    back = trade.objects.get(id = var_id)
+    data = {
+        'back' : back,        
+        }
     if request.method == 'POST': 
+        
         user_entry_condition = []
         user_exit_condition = []
         user_entry_condition.append(request.POST.getlist('entry parameter'))
@@ -38,13 +45,23 @@ def submit(request):
         indicator(user_exit_condition[0])
         indicator(user_exit_condition[2])
         
-        print(user_entry_condition)
-        back = main(user_entry_condition, user_exit_condition)
-        back.summary() 
-        print("cgchc")
-        
+        try:
+            back = main(user_entry_condition, user_exit_condition)
+            back.save()
+        except:
+            return HttpResponseBadRequest("please fill the fields correctly")
+        request.session['saved'] = back.id
         data = {
         'back' : back,        
         }
         
     return render(request , "submit.html" , data)
+
+def details(request):
+    var_id = request.session['saved']
+    details = trade.objects.get(id = var_id)
+    details.summary()
+    rang = len(details.exit_date)
+    print(rang)
+    zippped_list = zip(details.investment, details.entry_date,details.sell,details.exit_date,details.transaction)
+    return render(request, 'details.html' , {'detail': details,'zipped_list':zippped_list, 'range' : range(rang)})

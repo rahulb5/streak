@@ -1,22 +1,6 @@
-import json
+from .models import trade
 
-class trade:
-    
-    def __init__(self):
-        self.pos = 0
-        self.neg = 0
-        self.profit = 0
-        self.transaction = []
-        self.investment = []
-        self.sell = []
-        self.entry_date = []
-        self.exit_date = []
-    
-    
-    def summary(self):
-        print("Total Profit: " + str(self.profit))
-        print("Successful trades " + str(self.pos))
-        print("Unsuccessful trade " + str(self.neg))
+import json
         
 class query:
     def __init__ (self):
@@ -59,7 +43,7 @@ def backtest(user_entry_condition , user_exit_condition , datapoints , qty):
     
     buy_flag = 0
     back = trade()
-    count = 0
+    back.name = "back"
     f = open('data.txt', "w")
     
     for i in range(1,len(datapoints['open'])):
@@ -142,5 +126,5 @@ def main(entry_condition , exit_condition):
         
     
     
-    back = backtest(user_entry_condition, user_exit_condition , datapoints , 1)
-    return back
+    
+    return backtest(user_entry_condition, user_exit_condition , datapoints , 1)

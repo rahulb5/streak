@@ -1,12 +1,31 @@
 <form method = "POST" id = "myForm" action = "submit/">{% csrf_token %}
     
     <p>Entry Condtion:</p>
+    <datalist id="exampleList">
+        <option>open</option>
+        <option>close</option>
+        <option>high</option>
+        <option>low</option
+        ><option>vol</option>
+        <option>SMA 14</option>
+        <option>SMA 100</option>
+        </datalist>
+    <datalist id="conditionList">
+        <option>greater than</option>
+        <option>less than</option
+        ><option>crossed above</option>
+        <option>crossed below</option>
+        <option>equal to</option>
+        </datalist>
+    <input name="entry parameter" list="exampleList" placeholder="First Parameter"/><input placeholder="Condition" name="entry condtion" list="conditionList"/><input placeholder="Second Parameter" name="second_entry_parameter" list="exampleList"/>
+    <br>
     <div id ='entry-parameters'></div>
     <button type="button" onclick= "add_entry_parameter()" class="btn btn-primary m-t-15 waves-effect">Add a new Entry Condition</button> 
     <button type= "button" onclick= "remove_entry_parameter()" class= "btn btn-primary m-t-15 waves-effect">Remove Entry Condtion</button>
     <br>
     
     <p>Exit Condtion</p>
+    <input name="exit parameter" list="exampleList" placeholder="First Parameter"><input placeholder="Condition" name="exit condition" list="conditionList"><input placeholder="Second Parameter" name="second exit parameter" list="exampleList"><br>
     <div id = 'exit-parameters'></div>
     <button type="button" onclick= "add_exit_parameter()" class="btn btn-primary m-t-15 waves-effect">Add a new Exit Condition</button> 
     <button type= "button" onclick= "remove_exit_parameter()" class= "btn btn-primary m-t-15 waves-effect">Remove Exit Condtion</button>
@@ -24,7 +43,7 @@
    parameters= document.getElementById('entry-parameters');
    exit_parameters= document.getElementById('exit-parameters');
    var list = ['open' , 'close' , 'high' , 'low' , 'vol'];
-   var temp_list = [];
+
 
     function add_entry_parameter()
     {
@@ -81,7 +100,6 @@
     		parameters.appendChild(condition);
     		parameters.appendChild(input2);
     		parameters.appendChild(newline);
-    		temp_list.push(input.value);
     		
     }
     function remove_entry_parameter()
@@ -152,18 +170,12 @@
     }
     function remove_exit_parameter()
     {
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
-        exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
+            exit_parameters.removeChild(exit_parameters.lastElementChild);
     }
-    
-    function submit_form()
-    {
-        window.location = "submit/";
-    }
-    
 
 </script>
