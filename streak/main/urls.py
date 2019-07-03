@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.urls import path, include
 from . import views
-
 app_name = 'main'
 
 urlpatterns = [
         path("", views.homepage, name = "homepage"),
         path("input_data" , views.input_data , name = "input_data"),
+        path("", include('deploy.urls')),
 ]

@@ -21,5 +21,16 @@ class trade(models.Model):
         print("Total Profit: " + str(self.profit))
         print("Successful trades " + str(self.pos))
         print("Unsuccessful trade " + str(self.neg))
+
+class conditions(models.Model):
+    first_parameter = ArrayField(models.CharField(max_length = 100, default = ''), default = list)
+    condition = ArrayField(models.CharField(max_length = 100, default = ''), default = list)
+    second_parameter = ArrayField(models.CharField(max_length = 100, default = ''), default = list)
+    
+    def summary(self):
+        print(self.first_parameter)
+        print(self.condition)
+        print(self.second_parameter)
     
 admin.site.register(trade) 
+admin.site.register(conditions)

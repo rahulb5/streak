@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from backtest.main import main
-from .models import trade
+from .models import conditions, trade
 from django.http import HttpResponseBadRequest
+from deploy.models import live_model, results
+
 #from .main import trade
 
 # Create your views here.
@@ -28,6 +30,10 @@ def submit(request):
     data = {
         'back' : back,        
         }
+    live_results = results()
+    live_results.save()
+    request.session['live_results'] = live_results.id
+    
     if request.method == 'POST': 
         
         user_entry_condition = []
@@ -50,7 +56,31 @@ def submit(request):
             back.save()
         except:
             return HttpResponseBadRequest("please fill the fields correctly")
+        
+        entry_conditions = conditions()
+        entry_conditions.first_parameter = user_entry_condition[0]
+        entry_conditions.condition = user_entry_condition[1] 
+        entry_conditions.second_parameter = user_entry_condition[2]
+        entry_conditions.save()
+        
+        exit_conditions = conditions()
+        exit_conditions.first_parameter= user_exit_condition[0]
+        exit_conditions.condition = user_exit_condition[1]
+        exit_conditions.second_parameter = user_exit_condition[2]
+        exit_conditions.save()
+        
+        temp = live_model()
+        temp.buy_flag = 0
+        temp.save()
+        
+        
+        
         request.session['saved'] = back.id
+        request.session['entry_conditions'] = entry_conditions.id
+        request.session['exit_conditions'] = exit_conditions.id
+        request.session['temp_id'] = temp.id
+
+    
         data = {
         'back' : back,        
         }
@@ -62,6 +92,6 @@ def details(request):
     details = trade.objects.get(id = var_id)
     details.summary()
     rang = len(details.exit_date)
-    print(rang)
     zippped_list = zip(details.investment, details.entry_date,details.sell,details.exit_date,details.transaction)
+    
     return render(request, 'details.html' , {'detail': details,'zipped_list':zippped_list, 'range' : range(rang)})

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'backtest.apps.BacktestConfig',
+    'deploy.apps.DeployConfig',
 ]
 
 MIDDLEWARE = [
